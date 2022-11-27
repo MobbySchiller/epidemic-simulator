@@ -1,9 +1,12 @@
 import { FC } from 'react'
+import './Header.scss'
 
 const Header: FC = () => {
 
     return (
-        <header>Epidemic Simulator</header>
+        <header>
+            <h1 className='title'>Epidemic Simulator</h1>
+        </header>
     )
 }
 

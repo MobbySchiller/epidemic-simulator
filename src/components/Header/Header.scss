@@ -1,0 +1,11 @@
+@import '../../sass/variables';
+
+header {
+    border-bottom: 1px solid $border-color;
+    text-align: center;
+}
+
+.title {
+    padding: 10px;
+    text-transform: uppercase;
+}
