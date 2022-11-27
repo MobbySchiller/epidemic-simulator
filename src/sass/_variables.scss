@@ -1,0 +1,17 @@
+// media queries breakpoints
+$breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px
+);
+
+// colors
+$bcg-color-darker: #011627;
+$bcg-color-lighter: #152D40;
+$bright-blue: #219FD5;
+$light-blue: #A7DBF7;
+$white: #ffffff;
+$nav-blue: #004A80;
