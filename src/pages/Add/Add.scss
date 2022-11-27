@@ -1,0 +1,25 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+.add {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.add__form {
+    width: 100%;
+}
+
+.add__input {
+    margin: 10px 1px;
+}
+
+.add__people,
+.add__days {
+    @include mq(lg) {
+        display: flex;
+    }
+}
