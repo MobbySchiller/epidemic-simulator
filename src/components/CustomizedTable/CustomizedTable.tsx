@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { simulations } from '../../data';
+import { Record } from '../../data';
+import { useDataContext } from '../../context/DataContext';
+import { Link } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -8,57 +10,16 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
-
-interface Data {
-    N: string,
-    P: number,
-    I: number,
-    R: number,
-    M: number,
-    Ti: number,
-    Tm: number,
-    Ts: number,
-}
-
-function createData(
-    N: string,
-    P: number,
-    I: number,
-    R: number,
-    M: number,
-    Ti: number,
-    Tm: number,
-    Ts: number
-): Data {
-    return {
-        N,
-        P,
-        I,
-        R,
-        M,
-        Ti,
-        Tm,
-        Ts
-    };
-}
-
-const rows = simulations.map(simulation => {
-    const { N, P, I, R, M, Ti, Tm, Ts } = simulation
-    return (
-        createData(N, P, I, R, M, Ti, Tm, Ts))
-})
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -84,8 +45,6 @@ function getComparator<Key extends keyof any>(
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
     const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
     stabilizedThis.sort((a, b) => {
@@ -100,7 +59,7 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 
 interface HeadCell {
     disablePadding: boolean;
-    id: keyof Data;
+    id: any;
     label: string;
     numeric: boolean;
 }
@@ -153,12 +112,18 @@ const headCells: readonly HeadCell[] = [
         numeric: true,
         disablePadding: false,
         label: 'Days of simulation',
-    }
+    },
+    {
+        id: 'Details',
+        numeric: false,
+        disablePadding: false,
+        label: '',
+    },
 ];
 
 interface EnhancedTableProps {
     numSelected: number;
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Record) => void;
     onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
     orderBy: string;
@@ -169,7 +134,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
         props;
     const createSortHandler =
-        (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+        (property: keyof Record) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
         };
 
@@ -189,6 +154,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
+                        sx={{ fontWeight: 700 }}
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
@@ -214,11 +180,20 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 }
 
 interface EnhancedTableToolbarProps {
-    numSelected: number;
+    numSelected: number
+    selected: string[]
+    setSelected: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-    const { numSelected } = props;
+    const { numSelected, selected, setSelected } = props;
+    const { simulations, setSimulations } = useDataContext()
+
+    const handleDelete = () => {
+        const newSimulations = simulations.filter(simulation => !selected.includes(simulation.id))
+        setSelected([])
+        setSimulations(newSimulations)
+    }
 
     return (
         <Toolbar
@@ -243,7 +218,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             ) : (
                 <Typography
                     sx={{ flex: '1 1 100%' }}
-                    variant="h4"
+                    variant="h5"
                     fontWeight="700"
                     id="tableTitle"
                     component="div"
@@ -255,31 +230,64 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
                 <Tooltip title="Delete">
                     <Button
                         variant="contained"
-                        color="error">
+                        color="error"
+                        onClick={handleDelete}>
                         <DeleteIcon />
                     </Button>
                 </Tooltip>
             ) :
                 (<Tooltip title="Add">
-                    <Button
-                        variant="contained">
-                        <AddIcon />
-                    </Button>
-                </Tooltip>)}
-        </Toolbar>
+                    <Link to='/add'>
+                        <Button
+                            variant="contained">
+                            <AddIcon />
+                        </Button>
+                    </Link>
+                </Tooltip>)
+            }
+        </Toolbar >
     );
 }
 
 export default function EnhancedTable() {
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Data>('P');
-    const [selected, setSelected] = React.useState<readonly string[]>([]);
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [orderBy, setOrderBy] = React.useState<keyof Record>('P');
+    const [selected, setSelected] = React.useState<string[]>([]);
+    const { simulations } = useDataContext()
+
+    function createData(
+        id: string,
+        N: string,
+        P: number,
+        I: number,
+        R: number,
+        M: number,
+        Ti: number,
+        Tm: number,
+        Ts: number
+    ): Record {
+        return {
+            id,
+            N,
+            P,
+            I,
+            R,
+            M,
+            Ti,
+            Tm,
+            Ts
+        };
+    }
+
+    const rows = simulations.map(simulation => {
+        const { id, N, P, I, R, M, Ti, Tm, Ts } = simulation
+        return (
+            createData(id, N, P, I, R, M, Ti, Tm, Ts))
+    })
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
-        property: keyof Data,
+        property: keyof Record,
     ) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -288,7 +296,7 @@ export default function EnhancedTable() {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.N);
+            const newSelected = rows.map((n) => n.id);
             setSelected(newSelected);
             return;
         }
@@ -297,8 +305,7 @@ export default function EnhancedTable() {
 
     const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
         const selectedIndex = selected.indexOf(name);
-        let newSelected: readonly string[] = [];
-
+        let newSelected: string[] = [];
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selected, name);
         } else if (selectedIndex === 0) {
@@ -311,107 +318,78 @@ export default function EnhancedTable() {
                 selected.slice(selectedIndex + 1),
             );
         }
-
         setSelected(newSelected);
-    };
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
     };
 
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-    // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
     return (
         <Box sx={{ width: '100%' }}>
-            <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
-                <TableContainer>
-                    <Table
-                        sx={{ minWidth: 500 }}
-                        aria-labelledby="tableTitle"
-                    >
-                        <EnhancedTableHead
-                            numSelected={selected.length}
-                            order={order}
-                            orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
-                            onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
-                        />
-                        <TableBody>
-                            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-              rows.sort(getComparator(order, orderBy)).slice() */}
-                            {stableSort(rows, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row.N);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
+            <EnhancedTableToolbar numSelected={selected.length} selected={selected} setSelected={setSelected} />
+            <TableContainer>
+                <Table
+                    sx={{ minWidth: 500 }}
+                    aria-labelledby="tableTitle"
+                >
+                    <EnhancedTableHead
+                        numSelected={selected.length}
+                        order={order}
+                        orderBy={orderBy}
+                        onSelectAllClick={handleSelectAllClick}
+                        onRequestSort={handleRequestSort}
+                        rowCount={rows.length}
+                    />
+                    <TableBody>
+                        {stableSort(rows, getComparator(order, orderBy))
+                            .map((row, index) => {
+                                const isItemSelected = isSelected(row.id);
+                                const labelId = `enhanced-table-checkbox-${index}`;
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.N}
-                                            selected={isItemSelected}
+                                return (
+                                    <TableRow
+                                        hover
+                                        role="checkbox"
+                                        aria-checked={isItemSelected}
+                                        tabIndex={-1}
+                                        key={row.N}
+                                        selected={isItemSelected}
+                                    >
+                                        <TableCell padding="checkbox">
+                                            <Checkbox
+                                                onClick={(event) => handleClick(event, row.id)}
+                                                color="primary"
+                                                checked={isItemSelected}
+                                                inputProps={{
+                                                    'aria-labelledby': labelId,
+                                                }}
+                                            />
+                                        </TableCell>
+                                        <TableCell
+                                            component="th"
+                                            id={labelId}
+                                            scope="row"
+                                            padding="none"
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
-                                                    onClick={(event) => handleClick(event, row.N)}
-                                                    color="primary"
-                                                    checked={isItemSelected}
-                                                    inputProps={{
-                                                        'aria-labelledby': labelId,
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                id={labelId}
-                                                scope="row"
-                                                padding="none"
-                                            >
-                                                {row.N}
-                                            </TableCell>
-                                            <TableCell align="right">{row.P}</TableCell>
-                                            <TableCell align="right">{row.I}</TableCell>
-                                            <TableCell align="right">{row.R}</TableCell>
-                                            <TableCell align="right">{row.M}</TableCell>
-                                            <TableCell align="right">{row.Ti}</TableCell>
-                                            <TableCell align="right">{row.Tm}</TableCell>
-                                            <TableCell align="right">{row.Ts}</TableCell>
-                                            <TableCell align="right"><Button variant="outlined">Details</Button></TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            {emptyRows > 0 && (
-                                <TableRow>
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper>
+                                            {row.N}
+                                        </TableCell>
+                                        <TableCell align="right">{row.P}</TableCell>
+                                        <TableCell align="right">{row.I}</TableCell>
+                                        <TableCell align="right">{row.R}</TableCell>
+                                        <TableCell align="right">{row.M}</TableCell>
+                                        <TableCell align="right">{row.Ti}</TableCell>
+                                        <TableCell align="right">{row.Tm}</TableCell>
+                                        <TableCell align="right">{row.Ts}</TableCell>
+                                        <TableCell align="right">
+                                            <Link to={`/details-${row.id}`} style={{ textDecoration: 'none' }}>
+                                                <Button variant="outlined">Details</Button>
+                                            </Link>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Box>
     );
 }
