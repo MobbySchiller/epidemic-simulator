@@ -7,7 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LineChart from '../../components/LineChart/LineChart';
 import PieChart from '../../components/PieChart/PieChart';
-import './Details.scss'
+import './Results.scss'
 
 export interface Statistics {
     Pi: number
@@ -42,7 +42,7 @@ const Details: FC<{ data: Record }> = ({ data }) => {
     return (
         <div className='details'>
             <div className='details__title'>
-                <h2>Details</h2>
+                <h2>Results</h2>
                 <span>{N}</span>
             </div>
             <div className='details__buttons'>

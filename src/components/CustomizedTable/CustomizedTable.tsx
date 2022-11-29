@@ -379,8 +379,8 @@ export default function EnhancedTable() {
                                         <TableCell align="right">{row.Tm}</TableCell>
                                         <TableCell align="right">{row.Ts}</TableCell>
                                         <TableCell align="right">
-                                            <Link to={`/details-${row.id}`} style={{ textDecoration: 'none' }}>
-                                                <Button variant="outlined">Details</Button>
+                                            <Link to={`/results-${row.id}`} style={{ textDecoration: 'none' }}>
+                                                <Button variant="outlined">Results</Button>
                                             </Link>
                                         </TableCell>
                                     </TableRow>

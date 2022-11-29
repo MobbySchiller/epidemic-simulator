@@ -101,7 +101,7 @@
     max-height: 180px;
     margin-top: 20px;
     scale: 1;
-    // background-color: pink;
+
 
     @include mq(md) {
         margin-top: 0;
@@ -114,5 +114,4 @@
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    // background-color: cyan;
 }

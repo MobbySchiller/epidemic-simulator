@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Overall } from '../../pages/Details/Details';
+import { Overall } from '../../pages/Results/Results';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 
