@@ -77,8 +77,8 @@ const Add: FC = () => {
             label: '0',
         },
         {
-            value: 10,
-            label: '10',
+            value: 5,
+            label: '5',
         },
     ];
 
@@ -141,11 +141,11 @@ const Add: FC = () => {
                             aria-label="Contagiousness (R)"
                             value={state.R}
                             onChange={handleR}
-                            step={0.25}
+                            step={0.1}
                             valueLabelDisplay='auto'
                             marks={contagiousness}
                             min={0}
-                            max={10}
+                            max={5}
                         />
                     </label>
                     <label>
