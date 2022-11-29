@@ -36,8 +36,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
     ref,
 ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
 
 const Add: FC = () => {
     const { simulations, setSimulations } = useDataContext()
@@ -96,7 +96,7 @@ const Add: FC = () => {
 
     return (
         <div className='add'>
-            <h2 className='add__title'>Add new simulation</h2>
+            <h2 className='add__title'>Add</h2>
             <Button
                 variant="contained"
                 onClick={handleBackButton}
@@ -203,7 +203,7 @@ const Add: FC = () => {
                 </Button>
                 <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                        This is a success message!
+                        Simulation created successfully!
                     </Alert>
                 </Snackbar>
             </div>

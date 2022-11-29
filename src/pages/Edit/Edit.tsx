@@ -4,6 +4,8 @@ import Slider from '@mui/material/Slider'
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useDataContext } from '../../context/DataContext';
 import { Record } from '../../components/App/App';
 import './Edit.scss'
@@ -20,9 +22,17 @@ interface State {
     Ts: number
 }
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
+
 const Edit: FC<{ data: Record }> = ({ data }) => {
     const { simulations, setSimulations } = useDataContext()
     const [state, setState] = useState<State>(data)
+    const [open, setOpen] = useState<boolean>(false)
 
     const handleN = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setState({ ...state, N: e.target.value })
     const handleP = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setState({ ...state, P: Number(e.target.value) })
@@ -33,10 +43,16 @@ const Edit: FC<{ data: Record }> = ({ data }) => {
     const handleTm = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setState({ ...state, Tm: Number(e.target.value) })
     const handleTs = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setState({ ...state, Ts: Number(e.target.value) })
 
-    const handleAddButton = () => {
+    const handleSaveButton = () => {
         const newSimulations = simulations.filter(simulation => simulation.id !== state.id)
         setSimulations([...newSimulations, state])
+        setOpen(true)
     }
+
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') return
+        setOpen(false)
+    };
 
     const handleBackButton = () => window.history.back()
 
@@ -76,7 +92,7 @@ const Edit: FC<{ data: Record }> = ({ data }) => {
                 <Button
                     variant="contained"
                     color="success"
-                    onClick={handleAddButton}
+                    onClick={handleSaveButton}
                     startIcon={<SaveIcon />}>Save</Button>
             </div>
             <div className='edit__sheet'>
@@ -173,6 +189,11 @@ const Edit: FC<{ data: Record }> = ({ data }) => {
                             label="Days of simulation" />
                     </FormControl>
                 </div>
+                <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                        Saved!
+                    </Alert>
+                </Snackbar>
             </div>
         </div >
     )
