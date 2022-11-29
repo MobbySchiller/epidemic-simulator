@@ -6,14 +6,31 @@ import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SettingsIcon from '@mui/icons-material/Settings';
 import './Details.scss'
+import LineChart from '../../components/LineChart/LineChart';
+import PieChart from '../../components/PieChart/PieChart';
+
+export interface Statistics {
+    Pi: number
+    Pv: number
+    Pm: number
+    Pr: number
+    newPi: number
+}
+
+export interface Overall {
+    healthy: number
+    infected: number
+    recovered: number
+    dead: number
+}
 
 const Details: FC<{ data: Record }> = ({ data }) => {
     const { id, N, P, I, R, M, Tm, Ti, Ts } = data
-    const statistics = calculatateStats(data)
+    const statistics: Statistics[] = calculatateStats(data)
 
     const lastDay = statistics[Ts]
 
-    const overall = {
+    const overall: Overall = {
         healthy: lastDay.Pv,
         infected: lastDay.Pi,
         recovered: lastDay.Pr,
@@ -63,8 +80,12 @@ const Details: FC<{ data: Record }> = ({ data }) => {
                         <span>{overall.dead}</span>
                     </div>
                 </div>
-                <div className='pie-chart'></div>
-                <div className='line-chart'></div>
+                <div className='pie-chart'>
+                    <PieChart stats={overall} />
+                </div>
+                <div className='line-chart'>
+                    <LineChart stats={statistics} />
+                </div>
             </div>
         </div>
     )
