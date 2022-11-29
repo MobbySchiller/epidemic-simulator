@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react'
-import { useDataContext } from '../../context/DataContext';
 import { v4 as uuid } from 'uuid';
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material'
 import Slider from '@mui/material/Slider'
@@ -7,6 +6,7 @@ import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { useDataContext } from '../../context/DataContext';
 import './Add.scss'
 
 
@@ -59,6 +59,7 @@ const Add: FC = () => {
 
     const handleAddButton = () => {
         const newRecord = { id, ...state }
+        localStorage.setItem('simulations', JSON.stringify([...simulations, newRecord]))
         setSimulations([...simulations, newRecord])
         setOpen(true)
         setState(initialState)

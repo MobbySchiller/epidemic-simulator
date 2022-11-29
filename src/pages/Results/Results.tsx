@@ -1,13 +1,14 @@
 import { FC } from 'react'
-import { Record } from '../../data'
-import { calculatateStats } from './calculator';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LineChart from '../../components/LineChart/LineChart';
 import PieChart from '../../components/PieChart/PieChart';
+import { calculatateStats } from './calculator';
+import { Record } from '../../components/App/App';
 import './Results.scss'
+
 
 export interface Statistics {
     Pi: number

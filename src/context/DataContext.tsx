@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react"
-import { Record } from '../data'
+import { Record } from "../components/App/App"
 
 export interface Data {
     simulations: Record[]

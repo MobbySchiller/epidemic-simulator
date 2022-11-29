@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react'
 import { useDataContext } from '../../context/DataContext'
 import { Routes, Route } from 'react-router-dom'
-import { records } from '../../data'
 import List from '../../pages/List/List'
 import Add from '../../pages/Add/Add'
 import Details from '../../pages/Results/Results'
@@ -11,7 +10,10 @@ import './Mains.scss'
 const Main: FC = () => {
     const { simulations, setSimulations } = useDataContext()
 
-    useEffect(() => setSimulations(records), [])
+    useEffect(() => {
+        const records: any = localStorage.getItem('simulations')
+        setSimulations(JSON.parse(records))
+    }, [])
 
     const detailsRoutes = simulations.map(simulation => (
         <Route path={`/results-${simulation.id}`} element={<Details data={simulation} key={simulation.id} />} />

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Record } from '../../data';
+import { Record } from '../App/App';
 import { useDataContext } from '../../context/DataContext';
 import { Link } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
@@ -191,6 +191,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
     const handleDelete = () => {
         const newSimulations = simulations.filter(simulation => !selected.includes(simulation.id))
         setSelected([])
+        localStorage.setItem('simulations', JSON.stringify(newSimulations))
         setSimulations(newSimulations)
     }
 

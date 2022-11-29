@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react'
-import { useDataContext } from '../../context/DataContext';
-import { Record } from '../../data';
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material'
 import Slider from '@mui/material/Slider'
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
+import { useDataContext } from '../../context/DataContext';
+import { Record } from '../../components/App/App';
 import './Edit.scss'
 
 interface State {
