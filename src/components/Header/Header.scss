@@ -2,11 +2,15 @@
 
 header {
     border-bottom: 1px solid $border-color;
+    background-color: $bg-header;
     text-align: center;
 }
 
 .title {
     padding: 10px;
+    color: $white;
     font-size: 24px;
+    font-weight: 300;
     text-transform: uppercase;
+
 }
