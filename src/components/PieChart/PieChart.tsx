@@ -8,6 +8,14 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const PieChart: FC<{ stats: Overall }> = ({ stats }) => {
     const { healthy, infected, recovered, dead } = stats
 
+    const options = {
+        plugins: {
+            legend: {
+                display: false
+            },
+        },
+    }
+
     const data = {
         labels: ['Healthy', 'Infected', 'Recovered', 'Dead'],
         datasets: [
@@ -15,10 +23,10 @@ const PieChart: FC<{ stats: Overall }> = ({ stats }) => {
                 label: 'People',
                 data: [healthy, infected, recovered, dead],
                 backgroundColor: [
-                    'rgb(33, 150, 243, 0.6)',
-                    'rgb(255, 193, 7, 0.6)',
-                    'rgb(76, 175, 80, 0.6)',
-                    'rgb(244, 67, 54, 0.6)',
+                    'rgb(33, 150, 243, 0.9)',
+                    'rgb(255, 193, 7, 0.9)',
+                    'rgb(76, 175, 80, 0.9)',
+                    'rgb(244, 67, 54, 0.9)',
                 ],
                 borderColor: [
                     'rgb(33, 150, 243)',
@@ -29,9 +37,10 @@ const PieChart: FC<{ stats: Overall }> = ({ stats }) => {
                 borderWidth: 1,
             },
         ],
+
     }
     return (
-        <Pie data={data} />
+        <Pie data={data} options={options} />
     )
 }
 

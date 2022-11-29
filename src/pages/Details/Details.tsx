@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SettingsIcon from '@mui/icons-material/Settings';
-import './Details.scss'
 import LineChart from '../../components/LineChart/LineChart';
 import PieChart from '../../components/PieChart/PieChart';
+import './Details.scss'
 
 export interface Statistics {
     Pi: number
@@ -63,21 +63,21 @@ const Details: FC<{ data: Record }> = ({ data }) => {
             </div>
             <div className='details__results'>
                 <div className='overall'>
-                    <div className='overall__healthy'>
-                        <span>Healthy</span>
-                        <span>{overall.healthy}</span>
+                    <div className='overall-element overall-element--healthy'>
+                        <span className='overall-element__category'>Healthy</span>
+                        <span className='overall-element__value'>{overall.healthy}</span>
                     </div>
-                    <div className='overall__infected'>
-                        <span>Infected</span>
-                        <span>{overall.infected}</span>
+                    <div className='overall-element overall-element--infected'>
+                        <span className='overall-element__category'>Infected</span>
+                        <span className='overall-element__value'>{overall.infected}</span>
                     </div>
-                    <div className='overall__recovered'>
-                        <span>Recovered</span>
-                        <span>{overall.recovered}</span>
+                    <div className='overall-element overall-element--recovered'>
+                        <span className='overall-element__category'>Recovered</span>
+                        <span className='overall-element__value'>{overall.recovered}</span>
                     </div>
-                    <div className='overall__dead'>
-                        <span>Dead</span>
-                        <span>{overall.dead}</span>
+                    <div className='overall-element overall-element--dead'>
+                        <span className='overall-element__category'>Dead</span>
+                        <span className='overall-element__value'>{overall.dead}</span>
                     </div>
                 </div>
                 <div className='pie-chart'>

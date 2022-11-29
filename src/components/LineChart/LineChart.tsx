@@ -27,7 +27,7 @@ const LineChart: FC<{ stats: Statistics[] }> = ({ stats }) => {
             },
             title: {
                 display: true,
-                text: 'Chart.js Line Chart',
+                text: 'Simulation chart',
             },
         },
     }
@@ -41,25 +41,25 @@ const LineChart: FC<{ stats: Statistics[] }> = ({ stats }) => {
                 label: 'Healthy',
                 data: healthy,
                 borderColor: 'rgb(33, 150, 243)',
-                backgroundColor: 'rgba(33, 150, 243, 0.6)',
+                backgroundColor: 'rgba(33, 150, 243, 0.9)',
             },
             {
                 label: 'Infected',
                 data: infected,
                 borderColor: 'rgb(255, 193, 7)',
-                backgroundColor: 'rgba(255, 193, 7, 0.6)',
+                backgroundColor: 'rgba(255, 193, 7, 0.9)',
             },
             {
                 label: 'Recovered',
                 data: recovered,
                 borderColor: 'rgb(76, 175, 80)',
-                backgroundColor: 'rgba(76, 175, 80, 0.6)',
+                backgroundColor: 'rgba(76, 175, 80, 0.9)',
             },
             {
                 label: 'Dead',
                 data: dead,
                 borderColor: 'rgb(244, 67, 54)',
-                backgroundColor: 'rgba(244, 67, 54, 0.6)',
+                backgroundColor: 'rgba(244, 67, 54, 0.9)',
             },
         ],
     }

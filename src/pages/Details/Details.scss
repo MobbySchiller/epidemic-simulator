@@ -17,19 +17,17 @@
 .details__results {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 200px 300px 200px;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
         'overall'
         'pie-chart'
         'line-chart';
     width: 100%;
-    min-height: 82vh;
-    margin-top: 20px;
-    background-color: red;
+    padding-top: 20px;
 
     @include mq(md) {
         grid-template-columns: 50% 50%;
-        grid-template-rows: 200px 300px;
+        grid-template-rows: auto 50vh;
         grid-template-areas:
             'overall pie-chart'
             'line-chart line-chart';
@@ -38,15 +36,83 @@
 
 .overall {
     grid-area: overall;
-    background-color: royalblue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    max-height: 180px;
+}
+
+.overall-element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 49%;
+    // min-height: 100px;
+    // height: 49%;
+    border-radius: $radius;
+    color: $white;
+
+    @include mq(sm) {
+        width: 23%;
+    }
+
+    @include mq(md) {
+        width: 49%;
+        max-height: 85px;
+    }
+
+    &--healthy {
+        background-color: $healthy-color;
+        border: 1px solid darken($healthy-color, 15%);
+    }
+
+    &--infected {
+        background-color: $infected-color;
+        border: 1px solid darken($infected-color, 15%);
+    }
+
+    &--recovered {
+        background-color: $recovered-color;
+        border: 1px solid darken($recovered-color, 15%);
+    }
+
+    &--dead {
+        background-color: $dead-color;
+        border: 1px solid darken($dead-color, 15%);
+    }
+}
+
+.overall-element__category {
+    font-size: 22px;
+}
+
+.overall-element__value {
+    font-size: 30px;
 }
 
 .pie-chart {
     grid-area: pie-chart;
-    background-color: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 180px;
+    margin-top: 20px;
+    scale: 1;
+    // background-color: pink;
+
+    @include mq(md) {
+        margin-top: 0;
+    }
 }
 
 .line-chart {
     grid-area: line-chart;
-    background-color: cyan;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    // background-color: cyan;
 }
