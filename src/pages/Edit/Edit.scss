@@ -2,14 +2,20 @@
 @import '../../sass/mixins';
 
 
-.add__title {
+.edit__title {
     position: absolute;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
+    text-align: center;
 }
 
-.add__sheet {
+.edit__buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit__sheet {
     display: flex;
     flex-direction: column;
     max-width: 600px;
@@ -17,16 +23,16 @@
     padding: 20px;
 }
 
-.add__form {
+.edit__form {
     width: 100%;
 }
 
-.add__input {
+.edit__input {
     margin: 10px 1px;
 }
 
-.add__people,
-.add__days {
+.edit__people,
+.edit__days {
     @include mq(lg) {
         display: flex;
     }

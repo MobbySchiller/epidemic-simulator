@@ -1,0 +1,52 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+.details__title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.details__buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details__results {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 200px 300px 200px;
+    grid-template-areas:
+        'overall'
+        'pie-chart'
+        'line-chart';
+    width: 100%;
+    min-height: 82vh;
+    margin-top: 20px;
+    background-color: red;
+
+    @include mq(md) {
+        grid-template-columns: 50% 50%;
+        grid-template-rows: 200px 300px;
+        grid-template-areas:
+            'overall pie-chart'
+            'line-chart line-chart';
+    }
+}
+
+.overall {
+    grid-area: overall;
+    background-color: royalblue;
+}
+
+.pie-chart {
+    grid-area: pie-chart;
+    background-color: pink;
+}
+
+.line-chart {
+    grid-area: line-chart;
+    background-color: cyan;
+}
