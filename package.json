@@ -13,10 +13,13 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.15",
     "@mui/material": "^5.10.15",
+    "chart.js": "^4.0.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.0.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",

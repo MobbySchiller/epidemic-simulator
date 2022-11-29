@@ -20,18 +20,9 @@ interface State {
     Ts: number
 }
 
-// const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-//     props,
-//     ref,
-// ) {
-//     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-// });
-
 const Edit: FC<{ data: Record }> = ({ data }) => {
     const { simulations, setSimulations } = useDataContext()
     const [state, setState] = useState<State>(data)
-    // const [open, setOpen] = useState<boolean>(false)
-
 
     const handleN = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setState({ ...state, N: e.target.value })
     const handleP = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setState({ ...state, P: Number(e.target.value) })
@@ -43,19 +34,9 @@ const Edit: FC<{ data: Record }> = ({ data }) => {
     const handleTs = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setState({ ...state, Ts: Number(e.target.value) })
 
     const handleAddButton = () => {
-        // const editedSimulation = simulations.find(simulation => simulation.id === state.id)
         const newSimulations = simulations.filter(simulation => simulation.id !== state.id)
         setSimulations([...newSimulations, state])
-        // const newRecord = { id, ...state }
-        // setSimulations([...simulations, newRecord])
-        // setOpen(true)
     }
-
-    // const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    //     if (reason === 'clickaway') return
-    //     setOpen(false)
-    // };
-
 
     const handleBackButton = () => window.history.back()
 
@@ -192,11 +173,6 @@ const Edit: FC<{ data: Record }> = ({ data }) => {
                             label="Days of simulation" />
                     </FormControl>
                 </div>
-                {/* <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                        This is a success message!
-                    </Alert>
-                </Snackbar> */}
             </div>
         </div >
     )

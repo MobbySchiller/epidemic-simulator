@@ -6,14 +6,4 @@
     max-width: 1200px;
     margin: 0 auto;
     background-color: $bg-white;
-
-    @include mq(xl) {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        height: 600px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-    }
 }

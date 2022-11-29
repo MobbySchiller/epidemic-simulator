@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useDataContext } from '../../context/DataContext'
 import { Routes, Route } from 'react-router-dom'
 import { records } from '../../data'

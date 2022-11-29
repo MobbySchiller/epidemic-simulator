@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react'
 import { useDataContext } from '../../context/DataContext';
 import { v4 as uuid } from 'uuid';
-import { records } from '../../data';
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material'
 import Slider from '@mui/material/Slider'
 import Button from '@mui/material/Button';
