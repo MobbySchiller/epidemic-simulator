@@ -37,8 +37,8 @@ const PieChart: FC<{ stats: Overall }> = ({ stats }) => {
                 borderWidth: 1,
             },
         ],
-
     }
+
     return (
         <Pie data={data} options={options} />
     )

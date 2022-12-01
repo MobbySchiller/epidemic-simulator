@@ -11,6 +11,9 @@ const Main: FC = () => {
     const { simulations, setSimulations } = useDataContext()
 
     useEffect(() => {
+        if (localStorage.getItem('simulations') === null) {
+            localStorage.setItem('simulations', JSON.stringify([]))
+        }
         const records: any = localStorage.getItem('simulations')
         setSimulations(JSON.parse(records))
     }, [])

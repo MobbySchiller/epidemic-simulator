@@ -1,4 +1,4 @@
-import { Record } from '../../data'
+import { Record } from '../../components/App/App'
 
 export const calculatateStats = (record: Record) => {
     const { P, I, R, M, Ti, Tm, Ts } = record
@@ -24,20 +24,12 @@ export const calculatateStats = (record: Record) => {
 
         if (i >= Tm) {
             const { newPi: pastNewPi } = data[i - Tm]
-            if (M === 0.5) {
-                current.dead = Math.floor(pastNewPi * M)
-            } else {
-                current.dead = Math.round(pastNewPi * M)
-            }
+            current.dead = Math.floor(pastNewPi * M)
         }
 
         if (i >= Ti) {
             const { newPi: pastNewPi } = data[i - Ti]
-            if (M === 0.5) {
-                current.cured = Math.ceil(pastNewPi * (1 - M))
-            } else {
-                current.cured = Math.round(pastNewPi * (1 - M))
-            }
+            current.cured = Math.ceil(pastNewPi * (1 - M))
         }
 
         const allCases = current.cases + data.reduce((accumulator, currentValue) => accumulator + currentValue.newPi, 0)
@@ -54,6 +46,5 @@ export const calculatateStats = (record: Record) => {
 
         data[i] = { ...data[i], Pi, Pv, Pm, Pr, newPi: current.cases }
     }
-
     return data
 }
