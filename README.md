@@ -21,14 +21,17 @@ covid indicator R
 * Ti - the number of days that elapse between infection and recovery of the sick person
 * Tm - the number of days that elapse between infection and the death of the patient.
 * Ts - the number of days for which the simulation is to be carried out.
+
 The simulation will thus be an object containing the following data (N, P, I, R, M, Ti, Tm, Ts).
 After defining the simulation, the system will generate the initial population, that is, a record containing information about:
 Pi - the number of infected people
 Pv - the number of healthy people susceptible to infection
 Pm - the number of people who died
 Pr - the number of people who have recovered and acquired immunity
+
 It will then iteratively create successive objects containing the data set (Pi, Pv, Pm, Pr), for
 successive days of simulation -- in each successive object, the number of people in each group will change according to the rules:
+
 * M of those infected Tm days earlier will unfortunately move from the group of infected people to the
 group of deceased persons
 * All of the people infected Ti days earlier (and alive...) move from the group of infected people to the
@@ -43,8 +46,8 @@ where Pi + Pv + Pm + Pr = P"
 | ------------------------------------------------------- | ---------------------------------------- |
 | [TypeScript](https://www.typescriptlang.org/)                           | TypeScript is a strongly typed programming language that builds on JavaScript   |
 | [React](https://reactjs.org/)                           | A JavaScript library for building user interfaces   |
-| [ReactRouter](https://reactrouter.com/)                           | React Router is a standard library for routing in React.   |
-| [Material UI](https://mui.com/)                           | Open-source project that features React components that implement Google's Material Design.   |
+| [ReactRouter](https://reactrouter.com/)                           | React Router is a standard library for routing in React   |
+| [Material UI](https://mui.com/)                           | Open-source project that features React components that implement Google's Material Design   |
 | [Sass](https://sass-lang.com/)                           | Professional grade CSS extension   |
 | [Vite](https://vitejs.dev/)                           | build tool that aims to provide a faster and leaner development experience   |
 
