@@ -1,13 +1,10 @@
 {
-  "homepage": "https://mobbyschiller.github.io/epidemic-simulator/",
   "name": "epidemic-simulatior",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

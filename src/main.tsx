@@ -6,7 +6,7 @@ import './sass/styles.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/epidemic-simulator'>
       <App />
     </BrowserRouter>
   </React.StrictMode>
